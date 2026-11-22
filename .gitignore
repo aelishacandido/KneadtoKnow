@@ -1,0 +1,17 @@
+# Compiled Java & NetBeans build output
+/build/
+/dist/
+*.class
+*.jar
+
+# NetBeans user-specific files
+/nbproject/private/
+
+# Local runtime data & exported reports
+*.dat
+*.txt
+!README.md
+
+# OS files
+.DS_Store
+Thumbs.db
