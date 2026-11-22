@@ -9,15 +9,14 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class LoginFrame extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginFrame.class.getName());
-    
+        
     // private final Inventory inventory;
     private final List<User> users;
     
     public LoginFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        getRootPane().setDefaultButton(btnLogin);
         
         txtUsername.setText("");
         txtPassword.setText("");
@@ -31,7 +30,8 @@ public class LoginFrame extends javax.swing.JFrame {
         String username = txtUsername.getText().trim();
         String password = new String(txtPassword.getPassword());
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || username.equals("Username")
+            || password.isEmpty() || password.equals("Password")) {
             JOptionPane.showMessageDialog(
                     this,
                     "Please enter both username and password.",
@@ -84,65 +84,82 @@ public class LoginFrame extends javax.swing.JFrame {
         lblPassword = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
-        btnCancel = new javax.swing.JButton();
+        chkShowPassword = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Knead to Know - Login");
         setBackground(new java.awt.Color(249, 246, 240));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(400, 300));
+        setPreferredSize(new java.awt.Dimension(395, 320));
+        setResizable(false);
 
         lblLogin.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        lblLogin.setForeground(new java.awt.Color(35, 35, 35));
         lblLogin.setText("Login");
 
         lblUsername.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
         lblUsername.setText("Username:");
 
         sublblLogin.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
-        sublblLogin.setText("Please sign in to continue.");
+        sublblLogin.setForeground(new java.awt.Color(140, 140, 140));
+        sublblLogin.setText("Sign in to manage baking suppiles stock & sales.");
 
+        txtUsername.setBackground(new java.awt.Color(255, 255, 255));
         txtUsername.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(62, 39, 35));
         txtUsername.setText("Enter your username");
+        txtUsername.setToolTipText("");
+        txtUsername.setPreferredSize(new java.awt.Dimension(210, 32));
 
         lblPassword.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
         lblPassword.setText("Password:");
 
+        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
         txtPassword.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        txtPassword.setForeground(new java.awt.Color(62, 39, 35));
         txtPassword.setText("12345");
+        txtPassword.setPreferredSize(new java.awt.Dimension(210, 32));
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
 
+        btnLogin.setBackground(new java.awt.Color(74, 44, 24));
         btnLogin.setFont(new java.awt.Font("Bookman Old Style", 0, 13)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Login");
         btnLogin.addActionListener(this::btnLoginActionPerformed);
 
-        btnCancel.setFont(new java.awt.Font("Bookman Old Style", 0, 13)); // NOI18N
-        btnCancel.setText("Cancel");
-        btnCancel.addActionListener(this::btnCancelActionPerformed);
+        chkShowPassword.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        chkShowPassword.setText("Show Password");
+        chkShowPassword.addActionListener(this::chkShowPasswordActionPerformed);
+
+        jLabel1.setFont(new java.awt.Font("Baskerville Old Face", 0, 11)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(140, 140, 140));
+        jLabel1.setText("Need access? Contact your store Admin");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                    .addComponent(lblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sublblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(chkShowPassword)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblPassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                            .addGap(36, 36, 36)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sublblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(lblPassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(txtPassword)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(btnLogin)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancel)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,11 +176,13 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPassword))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin)
-                    .addComponent(btnCancel))
-                .addGap(43, 43, 43))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkShowPassword)
+                .addGap(18, 18, 18)
+                .addComponent(btnLogin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         lblLogin.getAccessibleContext().setAccessibleName("lblLogin");
@@ -179,42 +198,22 @@ public class LoginFrame extends javax.swing.JFrame {
         handleLogin();
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        handleCancel();
-    }//GEN-LAST:event_btnCancelActionPerformed
-
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
         handleLogin();
     }//GEN-LAST:event_txtPasswordActionPerformed
- 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new LoginFrame().setVisible(true));
+    private void chkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkShowPasswordActionPerformed
+        if (chkShowPassword.isSelected()) {
+        txtPassword.setEchoChar((char) 0);
+    } else {
+        txtPassword.setEchoChar('•');
     }
+    }//GEN-LAST:event_chkShowPasswordActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JCheckBox chkShowPassword;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblUsername;
