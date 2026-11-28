@@ -6,7 +6,6 @@ public class HistoryTabPanel extends javax.swing.JPanel {
      * Creates new form HistoryTabPanel
      */
     
-    private Inventory inventory;
      
     public HistoryTabPanel() {
         initComponents();
