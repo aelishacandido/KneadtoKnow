@@ -19,6 +19,10 @@ import java.util.List;
 
 public class Inventory {
 
+    private static final int BOX_WIDTH = 120;
+    private static final int LINE_MAX = BOX_WIDTH - 2;
+    private static final String BOX_BORDER = "+" + "-".repeat(BOX_WIDTH) + "+\n";
+
     private final List<Product> products;
     private final List<StockTransaction> transactions;
     private final List<Supplier> suppliers;
@@ -138,7 +142,7 @@ public class Inventory {
                 transactions.add(new StockTransaction("INITIAL_LOAD", p.getId(), p.getName(), p.getQuantity()));
             }
         } catch (InvalidInputException e) {
-            System.err.print("Seed error: " + e.getMessage() + "\n");
+            System.err.println("Seed error: " + e.getMessage());
         }
     }
 
@@ -284,18 +288,179 @@ public class Inventory {
         products.sort(comp);
     }
 
+    private String formatBoxLine(String content) {
+        String text = (content == null) ? "" : content;
+        if (text.length() > LINE_MAX) {
+            text = text.substring(0, LINE_MAX);
+        }
+        return String.format("| %-" + LINE_MAX + "s |%n", text);
+    }
+
+    private void appendWrappedBoxLine(StringBuilder sb, String text, String continuationPrefix) {
+        if (text == null || text.isEmpty()) {
+            sb.append(formatBoxLine(""));
+            return;
+        }
+
+        String current = text;
+        boolean firstLine = true;
+
+        while (!current.isEmpty()) {
+            String prefix = firstLine ? "" : continuationPrefix;
+            int available = LINE_MAX - prefix.length();
+            if (available < 10) {
+                prefix = "";
+                available = LINE_MAX;
+            }
+
+            if (current.length() <= available) {
+                sb.append(formatBoxLine(prefix + current));
+                break;
+            }
+
+            int splitAt = current.lastIndexOf(' ', available);
+            if (splitAt <= 0) {
+                splitAt = available;
+            }
+
+            String part = current.substring(0, splitAt).trim();
+            sb.append(formatBoxLine(prefix + part));
+            current = current.substring(splitAt).trim();
+            firstLine = false;
+        }
+    }
+
     public String generateSummaryReport() {
         StringBuilder sb = new StringBuilder();
         int totalUnits = 0;
         double totalVal = 0.0;
+
         for (Product p : products) {
             totalUnits += p.getQuantity();
             totalVal += p.calculateInventoryValue();
         }
-        sb.append("Total Products: ").append(products.size())
-          .append(" | Total Units: ").append(totalUnits)
-          .append(String.format(" | Total Value: PHP %.2f%n", totalVal));
-        sb.append("Low Stock Alert Count (Recursive): ").append(countLowStockRecursive(0)).append("\n");
+
+        int alertCount = countLowStockRecursive(0);
+
+        sb.append(BOX_BORDER);
+        sb.append(formatBoxLine("=== KNEAD TO KNOW INVENTORY SYSTEM SUMMARY REPORT ==="));
+        sb.append(formatBoxLine("Total Distinct Products : " + products.size()));
+        sb.append(formatBoxLine("Total Stock Units       : " + totalUnits));
+        sb.append(formatBoxLine(String.format("Total Inventory Value   : PHP %,.2f", totalVal)));
+        sb.append(formatBoxLine(""));
+        sb.append(formatBoxLine("--- LOW-STOCK & EXPIRY ALERTS (Recursive Count: " + alertCount + ") ---"));
+
+        int shownAlerts = 0;
+        for (Product p : products) {
+            if (p.isBelowReorderLevel() || p.isAlertTriggered()) {
+                shownAlerts++;
+                String line = String.format("• [%s] %s | Qty: %d (Reorder: %d) | Status: %s",
+                        p.getId(),
+                        p.getName(),
+                        p.getQuantity(),
+                        p.getReorderLevel(),
+                        p.getAlertStatus());
+                appendWrappedBoxLine(sb, line, "    ");
+            }
+        }
+
+        if (shownAlerts == 0) {
+            sb.append(formatBoxLine("No active low-stock or expiry alerts."));
+        }
+
+        sb.append(BOX_BORDER);
+        return sb.toString();
+    }
+
+    public String generateSupplierRestockReport(Supplier supplier) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(BOX_BORDER);
+        sb.append(formatBoxLine("=== KNEAD TO KNOW - SUPPLIER RESTOCK LIST ==="));
+
+        if (supplier == null) {
+            sb.append(formatBoxLine("No supplier selected."));
+            sb.append(BOX_BORDER);
+            return sb.toString();
+        }
+
+        sb.append(formatBoxLine("Supplier : " + supplier.getName() + " (" + supplier.getSupplierId() + ")"));
+        sb.append(formatBoxLine("Contact  : " + supplier.getContact()));
+        sb.append(formatBoxLine(""));
+        sb.append(formatBoxLine("--- ITEMS NEEDING RESTOCK ---"));
+
+        int count = 0;
+        for (Product p : products) {
+            Supplier ps = p.getSupplier();
+            boolean sameSupplier = ps != null
+                    && ps.getSupplierId() != null
+                    && ps.getSupplierId().equalsIgnoreCase(supplier.getSupplierId());
+            boolean needsRestock = p.isBelowReorderLevel() || p.isAlertTriggered();
+
+            if (sameSupplier && needsRestock) {
+                count++;
+                int targetQty = Math.max(p.getReorderLevel() * 2, p.getReorderLevel() + 1);
+                int orderQty = Math.max(1, targetQty - p.getQuantity());
+                String line = String.format("• [%s] %s | Qty: %d (Reorder: %d) | Order: %d | Status: %s",
+                        p.getId(),
+                        p.getName(),
+                        p.getQuantity(),
+                        p.getReorderLevel(),
+                        orderQty,
+                        p.getAlertStatus());
+                appendWrappedBoxLine(sb, line, "    ");
+            }
+        }
+
+        if (count == 0) {
+            sb.append(formatBoxLine("No items from this supplier currently require restocking."));
+        } else {
+            sb.append(formatBoxLine(""));
+            sb.append(formatBoxLine("Total Items to Restock: " + count));
+        }
+
+        sb.append(BOX_BORDER);
+        return sb.toString();
+    }
+
+    public String generateAllSuppliersSummaryReport() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(BOX_BORDER);
+        sb.append(formatBoxLine("=== KNEAD TO KNOW - ALL SUPPLIERS SUMMARY ==="));
+        sb.append(formatBoxLine("Total Registered Suppliers: " + suppliers.size()));
+        sb.append(formatBoxLine(""));
+
+        if (suppliers.isEmpty()) {
+            sb.append(formatBoxLine("No suppliers found."));
+            sb.append(BOX_BORDER);
+            return sb.toString();
+        }
+
+        for (Supplier s : suppliers) {
+            int itemCount = 0;
+            int totalQty = 0;
+            double totalValue = 0.0;
+            int restockNeeded = 0;
+
+            for (Product p : products) {
+                Supplier ps = p.getSupplier();
+                if (ps != null && ps.getSupplierId() != null
+                        && ps.getSupplierId().equalsIgnoreCase(s.getSupplierId())) {
+                    itemCount++;
+                    totalQty += p.getQuantity();
+                    totalValue += p.calculateInventoryValue();
+                    if (p.isBelowReorderLevel() || p.isAlertTriggered()) {
+                        restockNeeded++;
+                    }
+                }
+            }
+
+            appendWrappedBoxLine(sb, String.format("Supplier: %s [%s] | Contact: %s",
+                    s.getName(), s.getSupplierId(), s.getContact()), "    ");
+            appendWrappedBoxLine(sb, String.format("  Products: %d | Units: %d | Value: PHP %,.2f | Restock Needed: %d",
+                    itemCount, totalQty, totalValue, restockNeeded), "    ");
+        }
+
+        sb.append(BOX_BORDER);
         return sb.toString();
     }
 
@@ -332,7 +497,7 @@ public class Inventory {
             }
             return !suppliers.isEmpty();
         } catch (IOException e) {
-            System.err.print("Warning: Could not load suppliers file: " + e.getMessage() + "\n");
+            System.err.println("Warning: Could not load suppliers file: " + e.getMessage());
             return false;
         }
     }
@@ -341,7 +506,7 @@ public class Inventory {
         try {
             saveSuppliersToFile();
         } catch (IOException e) {
-            System.err.print("Warning: Could not save suppliers: " + e.getMessage() + "\n");
+            System.err.println("Warning: Could not save suppliers: " + e.getMessage());
         }
     }
 
@@ -368,7 +533,7 @@ public class Inventory {
             }
             return !products.isEmpty();
         } catch (IOException e) {
-            System.err.print("Warning: Could not load products file: " + e.getMessage() + "\n");
+            System.err.println("Warning: Could not load products file: " + e.getMessage());
             return false;
         }
     }
@@ -406,7 +571,7 @@ public class Inventory {
                 return new PackagingItems(id, name, unitPrice, quantity, reorderLevel, supplier, dimensions, piecesPerPack);
             }
         } catch (NumberFormatException | InvalidInputException e) {
-            System.err.print("Skipping invalid row: " + line + "\n");
+            System.err.println("Skipping invalid row: " + line);
         }
         return null;
     }
@@ -434,7 +599,7 @@ public class Inventory {
             }
             return true;
         } catch (IOException e) {
-            System.err.print("Warning: Could not load transactions file: " + e.getMessage() + "\n");
+            System.err.println("Warning: Could not load transactions file: " + e.getMessage());
             return false;
         }
     }
@@ -449,7 +614,7 @@ public class Inventory {
         try {
             saveAll();
         } catch (IOException e) {
-            System.err.print("Warning: Could not save data: " + e.getMessage() + "\n");
+            System.err.println("Warning: Could not save data: " + e.getMessage());
         }
     }
 
