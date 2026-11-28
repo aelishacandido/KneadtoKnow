@@ -1,6 +1,6 @@
 # Knead to Know — Baking Supplies Inventory & POS System
 
-**Knead to Know** is a Java Swing desktop inventory and point-of-sale (POS) system built for a local baking supply shop. Designed to run offline using custom binary file serialization (`.dat`), it combines role-based access control, multi-category product tracking, recursive search/alerts, and an auditable transaction ledger.
+**Knead to Know** is a Java Swing desktop inventory and point-of-sale (POS) system built for a local baking supply shop. Designed to run offline using buffered text/CSV file storage (FileStorage, .csv), it combines role-based access control, multi-category product tracking, recursive search/alerts, and an auditable transaction ledger.
 
 ---
 
@@ -10,6 +10,7 @@
 * **POS Checkout & Receipts:** Live shopping cart management with stock validation, discount calculation, change computation, and formatted receipt generation.
 * **Multi-Category Product Catalog:** Tracks `RawIngredient` (weight and expiration dates), `BakingTool` (material and warranty), and `PackagingItem` (dimensions and pack size).
 * **Recursive Operations & Audit Ledger:** Recursive product ID lookups and low-stock threshold alerts, paired with a `StockTransaction` ledger supporting one-click **Undo** and `.txt` report exports.
+* **Buffered CSV Persistence:** Reads and writes product, supplier, and transaction records using buffered I/O **(BufferedReader / BufferedWriter via FileStorage)** with automatic sample seeding on first run.
 
 ---
 
