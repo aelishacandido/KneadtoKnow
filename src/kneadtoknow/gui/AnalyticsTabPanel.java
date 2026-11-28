@@ -1,36 +1,28 @@
 package kneadtoknow.gui;
 
+import javax.swing.table.DefaultTableModel;
+
 public class AnalyticsTabPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AnalyticsTabPanel
-     */
     public AnalyticsTabPanel() {
         initComponents();
+        setupAnalyticsTable();
     }
-<<<<<<< HEAD
-    
+
     private void setupAnalyticsTable() {
-
-    DefaultTableModel model =
-        (DefaultTableModel) tblTable.getModel();
-
-    model.setColumnIdentifiers(new Object[]{
-        "Rank",
-        "Product Name",
-        "Units Sold"
-    });
+        DefaultTableModel model = (DefaultTableModel) tblTable.getModel();
+        model.setColumnIdentifiers(new Object[]{
+            "Rank",
+            "Product Name",
+            "Units Sold"
+        });
     }
-    
+
     // private void loadAnalytics() {
+    // }
 
-    //}
-    
     // private void updateInventoryHealth() {
-
-    //}
-=======
->>>>>>> origin/master
+    // }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -180,7 +172,7 @@ public class AnalyticsTabPanel extends javax.swing.JPanel {
     private void txtInventoryHealthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInventoryHealthActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtInventoryHealthActionPerformed
-
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
 <<<<<<< HEAD
@@ -197,3 +189,4 @@ public class AnalyticsTabPanel extends javax.swing.JPanel {
 >>>>>>> origin/master
     // End of variables declaration//GEN-END:variables
 }
+

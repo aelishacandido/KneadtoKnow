@@ -1,6 +1,6 @@
 package kneadtoknow.gui;
 
-// import kneadtoknow.core.Inventory; // will uncomment once Inventory is ready
+import kneadtoknow.core.Inventory;
 import kneadtoknow.model.AdminUser;
 import kneadtoknow.model.StaffUser;
 import kneadtoknow.model.User;
@@ -9,23 +9,29 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class LoginFrame extends javax.swing.JFrame {
-        
-    // private final Inventory inventory;
+
+    private final Inventory inventory;
     private final List<User> users;
-    
+
     public LoginFrame() {
+        this(new Inventory());
+    }
+
+    public LoginFrame(Inventory inventory) {
         initComponents();
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btnLogin);
-        
+
+        this.inventory = (inventory != null) ? inventory : new Inventory();
+
         txtUsername.setText("");
         txtPassword.setText("");
-        
+
         this.users = new ArrayList<>();
         this.users.add(new AdminUser("admin", "admin123"));
         this.users.add(new StaffUser("staff", "staff123"));
     }
-    
+
     private void handleLogin() {
         String username = txtUsername.getText().trim();
         String password = new String(txtPassword.getPassword());
@@ -52,13 +58,14 @@ public class LoginFrame extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE
                 );
 
-                // TODO: Once Inventory and InventoryGUI are ready, replace the popup above with:
-                // new InventoryGUI(inventory, user).setVisible(true);
-                // this.dispose();
+                InventoryGUI mainGui = new InventoryGUI(this.inventory);
+                mainGui.setLocationRelativeTo(null);
+                mainGui.setVisible(true);
+                this.dispose();
                 return;
             }
         }
-        
+
         txtPassword.setText("");
         JOptionPane.showMessageDialog(
                 this,
