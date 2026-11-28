@@ -10,9 +10,9 @@ public class InventoryGUI extends javax.swing.JFrame {
     public InventoryGUI() {
     initComponents();
 
-    InventoryPanel.setLayout(new java.awt.BorderLayout());
+    InventoryPanel.setLayout(new java.awt.GridBagLayout());
 
-    InventoryPanel.add(new InventoryTabPanel(),java.awt.BorderLayout.CENTER);
+    InventoryPanel.add(new InventoryTabPanel());
     
  /*  PosPanel.setLayout(new java.awt.BorderLayout());
 
