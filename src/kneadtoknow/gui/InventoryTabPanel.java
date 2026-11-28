@@ -3,8 +3,17 @@ package kneadtoknow.gui;
 import kneadtoknow.core.Inventory;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.RowFilter;
+import kneadtoknow.model.Product;
+import kneadtoknow.model.RawIngredient;
+import kneadtoknow.model.BakingTools;
+import kneadtoknow.model.PackagingItems;
+import kneadtoknow.model.Supplier;
+import kneadtoknow.exception.InvalidInputException;
 
 public class InventoryTabPanel extends javax.swing.JPanel {
+    
+    private TableRowSorter<DefaultTableModel> sorter;
     private Inventory inventory;
     /**
      * Creates new form InventoryTabPanel
@@ -14,10 +23,28 @@ public class InventoryTabPanel extends javax.swing.JPanel {
         
         DefaultTableModel model =(DefaultTableModel) tblProducts.getModel();
         
-        model.addRow(new Object[]{"ING-001","Flour","Raw Ingredient",1840.25,25,"In Stock"});
-        
         inventory = new Inventory();
+        
+        loadProductsToTable();
+        
+        sorter = new TableRowSorter<>(
+        (DefaultTableModel) tblProducts.getModel());
+
+        tblProducts.setRowSorter(sorter);
+    
     }
+    private void loadProductsToTable() {
+
+    DefaultTableModel model =
+            (DefaultTableModel) tblProducts.getModel();
+
+    model.setRowCount(0);
+
+    for (Product p : inventory.getProducts()) {
+
+        model.addRow(new Object[]{p.getId(),p.getName(),p.getCategory(),p.getUnitPrice(),p.getQuantity(),p.getAlertStatus()});
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,6 +98,7 @@ public class InventoryTabPanel extends javax.swing.JPanel {
 
         cmbCategory.setBackground(new java.awt.Color(245, 240, 230));
         cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Categories", "Raw Ingredients", "Packaging Items", "Baking Tools" }));
+        cmbCategory.addActionListener(this::cmbCategoryActionPerformed);
 
         jLabel4.setText("Status");
 
@@ -249,61 +277,78 @@ public class InventoryTabPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStatusActionPerformed
-         String selectedStatus = cmbStatus.getSelectedItem().toString();
 
-    for (int i = 0; i < tblProducts.getRowCount(); i++) {
+    String selected = cmbStatus.getSelectedItem().toString();
 
-        String status = tblProducts.getValueAt(i, 5).toString();
+    if(selected.equals("All Status")) {
 
-        if (status.equals(selectedStatus)) {
+        sorter.setRowFilter(null);
 
-            tblProducts.setRowSelectionInterval(i, i);
+    } else {
 
-            tblProducts.scrollRectToVisible(tblProducts.getCellRect(i, 0, true));
+        sorter.setRowFilter(RowFilter.regexFilter("^" + selected + "$",5));
+    }
 
-            return;
-        }
-}
     }//GEN-LAST:event_cmbStatusActionPerformed
 
     private void cmbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSortActionPerformed
-        TableRowSorter<DefaultTableModel> sorter =new TableRowSorter<>((DefaultTableModel) tblProducts.getModel());
+        String selected = cmbSort.getSelectedItem().toString();
 
-    tblProducts.setRowSorter(sorter);
+    if(selected.equals("Name Asc")) {
+        sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.ASCENDING)));
 
-    String selected = cmbSort.getSelectedItem().toString();
+    } else if(selected.equals("Name Desc")) {
+        sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.DESCENDING)));
 
-    if (selected.equals("Name Asc")) {
+    } else if(selected.equals("Price Asc")) {
 
-        sorter.toggleSortOrder(1);
+        sorter.setSortKeys(
+            java.util.List.of(
+                new javax.swing.RowSorter.SortKey(
+                    3,
+                    javax.swing.SortOrder.ASCENDING
+                )
+            )
+        );
 
-    } else if (selected.equals("Name Desc")) {
+    } else if(selected.equals("Price Desc")) {
 
-        sorter.toggleSortOrder(1);
-        sorter.toggleSortOrder(1);
-}
+        sorter.setSortKeys(
+            java.util.List.of(
+                new javax.swing.RowSorter.SortKey(
+                    3,
+                    javax.swing.SortOrder.DESCENDING
+                )
+            )
+        );
+    }
+
     }//GEN-LAST:event_cmbSortActionPerformed
 
     private void btnStockInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockInActionPerformed
+
+
     int row = tblProducts.getSelectedRow();
 
     if(row >= 0){
 
-    DefaultTableModel model =(DefaultTableModel) tblProducts.getModel();
+        String id =
+            tblProducts.getValueAt(row,0).toString();
 
-    int qty = Integer.parseInt(model.getValueAt(row,4).toString());
+        try {
 
-    qty++;
+            inventory.stockIn(id,1);
 
-    model.setValueAt(qty,row,4);
+            loadProductsToTable();
 
-    if(qty < 10)
-        model.setValueAt(
-            "Low Stock",row,5);
-    else
-        model.setValueAt(
-            "In Stock",row,5);
-}       
+        } catch(Exception ex){
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    ex.getMessage()
+            );
+        }
+    }
     }//GEN-LAST:event_btnStockInActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -311,57 +356,87 @@ public class InventoryTabPanel extends javax.swing.JPanel {
 
         if(row >= 0){
 
-    DefaultTableModel model =(DefaultTableModel) tblProducts.getModel();
+    String id = tblProducts.getValueAt(row,0).toString();
 
-    model.removeRow(row);
+    try {
+        inventory.deleteProduct(id);
+        loadProductsToTable();
+
+    } catch(Exception ex){
+
+        javax.swing.JOptionPane.showMessageDialog(this,ex.getMessage());
+    }
 
 }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        String id = javax.swing.JOptionPane.showInputDialog(this,"Enter Product ID:");
+         try {String category = cmbCategory.getSelectedItem().toString();
 
-    if (id == null || id.trim().isEmpty()) {
-        return;
-    }
+        String id = javax.swing.JOptionPane.showInputDialog(this,"Product ID:");
 
-    String name = javax.swing.JOptionPane.showInputDialog(this,"Enter Product Name:");
+        String name = javax.swing.JOptionPane.showInputDialog(this,"Product Name:");
 
-    if (name == null || name.trim().isEmpty()) {
-        return;
-    }
+        double price =
+                Double.parseDouble(javax.swing.JOptionPane.showInputDialog(this,"Unit Price:"));
 
-    String category = javax.swing.JOptionPane.showInputDialog(this,"Enter Category\n(Raw Ingredient / Packaging Item / Baking Tool):");
+        int qty =
+                Integer.parseInt(
+                        javax.swing.JOptionPane.showInputDialog(this,"Quantity:"));
 
-    if (category == null || category.trim().isEmpty()) {
-        return;
-    }
+        int reorderLevel =
+                Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Reorder Level:"));
 
-    String priceInput = javax.swing.JOptionPane.showInputDialog(this,"Enter Price:");
+        Supplier supplier = null;
 
-    String qtyInput = javax.swing.JOptionPane.showInputDialog(this,"Enter Quantity:");
+        Product product;
 
-    try {
+        if (category.equals("Raw Ingredients")) {
 
-        double price = Double.parseDouble(priceInput);
-        int qty = Integer.parseInt(qtyInput);
+            String unit =
+                    javax.swing.JOptionPane.showInputDialog(this,"Unit of Measure:");
 
-        String status;
+            String expiration =
+                    javax.swing.JOptionPane.showInputDialog(this,"Expiration Date (YYYY-MM-DD):");
 
-        if (qty < 10) {
-            status = "Low Stock";
+            product = new RawIngredient(id,name,price,qty,reorderLevel,supplier,unit,expiration);
+
+        } else if (category.equals("Packaging Items")) {
+
+            String dimensions =
+                    javax.swing.JOptionPane.showInputDialog(this,"Dimensions:");
+
+            int piecesPerPack = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Pieces Per Pack:"));
+
+            product = new PackagingItems(id,name,price,qty,reorderLevel,supplier,dimensions,piecesPerPack);
+
         } else {
-            status = "In Stock";
+
+            int warrantyMonths = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Warranty Months:"));
+
+            product = new BakingTools(id,name,price,qty,reorderLevel,supplier,warrantyMonths);
         }
 
-        DefaultTableModel model = (DefaultTableModel) tblProducts.getModel();
+        inventory.addProduct(product);
 
-        model.addRow(new Object[]{id,name,category,price,qty,status});
+        loadProductsToTable();
 
-    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Product added successfully!"
+        );
 
-        javax.swing.JOptionPane.showMessageDialog(this,"Invalid price or quantity.");
- }
+    } catch (InvalidInputException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this,ex.getMessage());
+
+    } catch (NumberFormatException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this,"Please enter valid numeric values.");
+        
+    } catch (Exception ex) {
+
+        javax.swing.JOptionPane.showMessageDialog(this,ex.getMessage());
+    }
+
                
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -377,26 +452,22 @@ public class InventoryTabPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnStockOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockOutActionPerformed
-        int row = tblProducts.getSelectedRow();
 
-        if(row >= 0){
+    int row = tblProducts.getSelectedRow();
 
-        DefaultTableModel model =(DefaultTableModel) tblProducts.getModel();
+    if(row >= 0){
 
-    int qty = Integer.parseInt(model.getValueAt(row,4).toString());
+        String id = tblProducts.getValueAt(row,0).toString();
 
-    if(qty > 0){
-        qty--;
-    }
+        try {
+            inventory.stockOut(id,1,"MANUAL_STOCK_OUT");
 
-    model.setValueAt(qty,row,4);
+            loadProductsToTable();
 
-    if(qty < 10)
-        model.setValueAt(
-            "Low Stock",row,5);
-    else
-        model.setValueAt(
-            "In Stock",row,5);
+        } catch(Exception ex){
+
+            javax.swing.JOptionPane.showMessageDialog(this,ex.getMessage());
+        }
 }
     }//GEN-LAST:event_btnStockOutActionPerformed
 
@@ -420,31 +491,33 @@ public class InventoryTabPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-    String searchText = txtSearch.getText().trim().toLowerCase();
 
-    for (int i = 0; i < tblProducts.getRowCount(); i++) {
+    String text = txtSearch.getText().trim();
 
-        String productName = tblProducts.getValueAt(i, 1).toString().toLowerCase();
-
-        if (productName.contains(searchText)) {
-
-            tblProducts.setRowSelectionInterval(i, i);
-
-            tblProducts.scrollRectToVisible(
-                tblProducts.getCellRect(i, 0, true)
-            );
-
-            return;
-        }
+    if(text.isEmpty()) {
+        sorter.setRowFilter(null);
+    } else {
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text,1));
     }
-
+     if(tblProducts.getRowCount() == 0) {
     javax.swing.JOptionPane.showMessageDialog(this,"Product not found.");
     }//GEN-LAST:event_btnSearchActionPerformed
-
+}
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         btnSearchActionPerformed(evt);
         
     }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void cmbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoryActionPerformed
+        String selected = cmbCategory.getSelectedItem().toString();
+
+    if(selected.equals("All Categories")) {
+        sorter.setRowFilter(null);
+    } else {
+        sorter.setRowFilter(RowFilter.regexFilter(selected,2));
+    }
+
+    }//GEN-LAST:event_cmbCategoryActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
