@@ -2,6 +2,7 @@ package kneadtoknow.gui;
 
 import kneadtoknow.core.Inventory;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class InventoryTabPanel extends javax.swing.JPanel {
     private Inventory inventory;
@@ -30,7 +31,7 @@ public class InventoryTabPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         cmbCategory = new javax.swing.JComboBox<>();
@@ -52,31 +53,47 @@ public class InventoryTabPanel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(114, 92, 63));
         jLabel1.setText("Product Catalog & Controls");
 
         jLabel2.setText("Search:");
 
-        jTextField1.setText("txtSearch");
+        txtSearch.setBackground(new java.awt.Color(245, 240, 230));
+        txtSearch.setText("Search product");
+        txtSearch.addActionListener(this::txtSearchActionPerformed);
 
+        btnSearch.setBackground(new java.awt.Color(216, 215, 178));
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Search");
+        btnSearch.addActionListener(this::btnSearchActionPerformed);
 
         jLabel3.setText("Category:");
 
+        cmbCategory.setBackground(new java.awt.Color(245, 240, 230));
         cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Categories", "Raw Ingredients", "Packaging Items", "Baking Tools" }));
 
         jLabel4.setText("Status");
 
+        cmbStatus.setBackground(new java.awt.Color(245, 240, 230));
         cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Low Stock", "In Stock", " " }));
         cmbStatus.addActionListener(this::cmbStatusActionPerformed);
 
         jLabel5.setText("Sort by:");
 
+        cmbSort.setBackground(new java.awt.Color(245, 240, 230));
         cmbSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name Asc", "Name Desc", "Price Asc", "Price Desc", "Quantity Asc", "Quantity Desc" }));
         cmbSort.addActionListener(this::cmbSortActionPerformed);
 
+        btnReset.setBackground(new java.awt.Color(114, 92, 63));
+        btnReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnReset.setForeground(new java.awt.Color(255, 255, 255));
         btnReset.setText("Reset Filters");
         btnReset.addActionListener(this::btnResetActionPerformed);
 
+        jScrollPane1.setBackground(new java.awt.Color(245, 240, 230));
+
+        tblProducts.setBackground(new java.awt.Color(245, 240, 230));
         tblProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -91,33 +108,38 @@ public class InventoryTabPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblProducts);
         tblProducts.getAccessibleContext().setAccessibleName("");
 
-        btnAdd.setBackground(new java.awt.Color(153, 51, 0));
+        btnAdd.setBackground(new java.awt.Color(216, 215, 178));
         btnAdd.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("Add Product");
+        btnAdd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAdd.addActionListener(this::btnAddActionPerformed);
 
-        btnEdit.setBackground(new java.awt.Color(153, 0, 0));
+        btnEdit.setBackground(new java.awt.Color(216, 215, 178));
         btnEdit.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Edit Product");
+        btnEdit.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnEdit.addActionListener(this::btnEditActionPerformed);
 
-        btnDelete.setBackground(new java.awt.Color(102, 0, 0));
+        btnDelete.setBackground(new java.awt.Color(114, 92, 63));
         btnDelete.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
+        btnDelete.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnDelete.setLabel("Delete");
         btnDelete.addActionListener(this::btnDeleteActionPerformed);
 
-        btnStockIn.setBackground(new java.awt.Color(255, 51, 51));
+        btnStockIn.setBackground(new java.awt.Color(208, 167, 123));
         btnStockIn.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
         btnStockIn.setForeground(new java.awt.Color(255, 255, 255));
+        btnStockIn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnStockIn.setLabel("Stock In");
         btnStockIn.addActionListener(this::btnStockInActionPerformed);
 
-        btnStockOut.setBackground(new java.awt.Color(255, 51, 51));
+        btnStockOut.setBackground(new java.awt.Color(208, 167, 123));
         btnStockOut.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
         btnStockOut.setForeground(new java.awt.Color(255, 255, 255));
+        btnStockOut.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnStockOut.setLabel("Stock Out");
         btnStockOut.addActionListener(this::btnStockOutActionPerformed);
 
@@ -128,45 +150,45 @@ public class InventoryTabPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnStockIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnStockOut, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(btnSearch)
                                     .addGap(46, 46, 46)
                                     .addComponent(jLabel3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(btnStockIn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnStockOut, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 9, Short.MAX_VALUE))))
+                                    .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(36, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +198,7 @@ public class InventoryTabPanel extends javax.swing.JPanel {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch)
                     .addComponent(jLabel3)
                     .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -188,17 +210,20 @@ public class InventoryTabPanel extends javax.swing.JPanel {
                     .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd)
-                    .addComponent(btnEdit)
-                    .addComponent(btnDelete)
-                    .addComponent(btnStockIn)
-                    .addComponent(btnStockOut))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnStockOut, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnStockIn, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
 
+        txtSearch.getAccessibleContext().setAccessibleName("txtSearch");
         btnSearch.getAccessibleContext().setAccessibleName("btnSearch");
         cmbCategory.getAccessibleContext().setAccessibleName("cmbCategory");
         jLabel4.getAccessibleContext().setAccessibleName("Status:");
@@ -227,36 +252,202 @@ public class InventoryTabPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStatusActionPerformed
-        // TODO add your handling code here:
+         String selectedStatus = cmbStatus.getSelectedItem().toString();
+
+    for (int i = 0; i < tblProducts.getRowCount(); i++) {
+
+        String status = tblProducts.getValueAt(i, 5).toString();
+
+        if (status.equals(selectedStatus)) {
+
+            tblProducts.setRowSelectionInterval(i, i);
+
+            tblProducts.scrollRectToVisible(tblProducts.getCellRect(i, 0, true));
+
+            return;
+        }
+}
     }//GEN-LAST:event_cmbStatusActionPerformed
 
     private void cmbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSortActionPerformed
-        // TODO add your handling code here:
+        TableRowSorter<DefaultTableModel> sorter =new TableRowSorter<>((DefaultTableModel) tblProducts.getModel());
+
+    tblProducts.setRowSorter(sorter);
+
+    String selected = cmbSort.getSelectedItem().toString();
+
+    if (selected.equals("Name Asc")) {
+
+        sorter.toggleSortOrder(1);
+
+    } else if (selected.equals("Name Desc")) {
+
+        sorter.toggleSortOrder(1);
+        sorter.toggleSortOrder(1);
+}
     }//GEN-LAST:event_cmbSortActionPerformed
 
     private void btnStockInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockInActionPerformed
-        // TODO add your handling code here:
+    int row = tblProducts.getSelectedRow();
+
+    if(row >= 0){
+
+    DefaultTableModel model =(DefaultTableModel) tblProducts.getModel();
+
+    int qty = Integer.parseInt(model.getValueAt(row,4).toString());
+
+    qty++;
+
+    model.setValueAt(qty,row,4);
+
+    if(qty < 10)
+        model.setValueAt(
+            "Low Stock",row,5);
+    else
+        model.setValueAt(
+            "In Stock",row,5);
+}       
     }//GEN-LAST:event_btnStockInActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        int row = tblProducts.getSelectedRow();
+
+        if(row >= 0){
+
+    DefaultTableModel model =(DefaultTableModel) tblProducts.getModel();
+
+    model.removeRow(row);
+
+}
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        String id = javax.swing.JOptionPane.showInputDialog(this,"Enter Product ID:");
+
+    if (id == null || id.trim().isEmpty()) {
+        return;
+    }
+
+    String name = javax.swing.JOptionPane.showInputDialog(this,"Enter Product Name:");
+
+    if (name == null || name.trim().isEmpty()) {
+        return;
+    }
+
+    String category = javax.swing.JOptionPane.showInputDialog(this,"Enter Category\n(Raw Ingredient / Packaging Item / Baking Tool):");
+
+    if (category == null || category.trim().isEmpty()) {
+        return;
+    }
+
+    String priceInput = javax.swing.JOptionPane.showInputDialog(this,"Enter Price:");
+
+    String qtyInput = javax.swing.JOptionPane.showInputDialog(this,"Enter Quantity:");
+
+    try {
+
+        double price = Double.parseDouble(priceInput);
+        int qty = Integer.parseInt(qtyInput);
+
+        String status;
+
+        if (qty < 10) {
+            status = "Low Stock";
+        } else {
+            status = "In Stock";
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblProducts.getModel();
+
+        model.addRow(new Object[]{id,name,category,price,qty,status});
+
+    } catch (NumberFormatException e) {
+
+        javax.swing.JOptionPane.showMessageDialog(this,"Invalid price or quantity.");
+ }
+               
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        // TODO add your handling code here:
+        txtSearch.setText("");
+        cmbCategory.setSelectedIndex(0);
+        cmbStatus.setSelectedIndex(0);
+        cmbSort.setSelectedIndex(0);
+        tblProducts.clearSelection();
+
+    javax.swing.JOptionPane.showMessageDialog(this,"Filters have been reset.");
+
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnStockOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockOutActionPerformed
-        // TODO add your handling code here:
+        int row = tblProducts.getSelectedRow();
+
+        if(row >= 0){
+
+        DefaultTableModel model =(DefaultTableModel) tblProducts.getModel();
+
+    int qty = Integer.parseInt(model.getValueAt(row,4).toString());
+
+    if(qty > 0){
+        qty--;
+    }
+
+    model.setValueAt(qty,row,4);
+
+    if(qty < 10)
+        model.setValueAt(
+            "Low Stock",row,5);
+    else
+        model.setValueAt(
+            "In Stock",row,5);
+}
     }//GEN-LAST:event_btnStockOutActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        int row = tblProducts.getSelectedRow();
+
+    if (row >= 0) {
+
+        String currentName = tblProducts.getValueAt(row, 1).toString();
+
+        String newName =  javax.swing.JOptionPane.showInputDialog(this,"Enter new product name:",currentName);
+
+        if (newName != null && !newName.trim().isEmpty()) {
+
+            tblProducts.setValueAt(newName, row, 1);
+        }
+    } else {
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a product first.");
+    }
     }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    String searchText = txtSearch.getText().trim().toLowerCase();
+
+    for (int i = 0; i < tblProducts.getRowCount(); i++) {
+
+        String productName = tblProducts.getValueAt(i, 1).toString().toLowerCase();
+
+        if (productName.contains(searchText)) {
+
+            tblProducts.setRowSelectionInterval(i, i);
+
+            tblProducts.scrollRectToVisible(
+                tblProducts.getCellRect(i, 0, true)
+            );
+
+            return;
+        }
+    }
+
+    javax.swing.JOptionPane.showMessageDialog(this,"Product not found.");
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        btnSearchActionPerformed(evt);
+        
+    }//GEN-LAST:event_txtSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -277,7 +468,7 @@ public class InventoryTabPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblProducts;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }
