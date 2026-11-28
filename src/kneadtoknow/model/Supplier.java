@@ -2,7 +2,7 @@ package kneadtoknow.model;
 
 import java.io.Serializable;
 
-public class Supplier {
+public class Supplier implements Serializable {
 
     private String supplierId, name, contact;
 
@@ -22,10 +22,6 @@ public class Supplier {
 
     public String getContact() {
         return contact;
-    }
-
-    public String toCsvLine() {
-        return supplierId + "," + name + "," + contact;
     }
 
     @Override
