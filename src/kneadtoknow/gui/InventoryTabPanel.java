@@ -35,8 +35,7 @@ public class InventoryTabPanel extends javax.swing.JPanel {
     }
     private void loadProductsToTable() {
 
-    DefaultTableModel model =
-            (DefaultTableModel) tblProducts.getModel();
+    DefaultTableModel model = (DefaultTableModel) tblProducts.getModel();
 
     model.setRowCount(0);
 
@@ -289,34 +288,16 @@ public class InventoryTabPanel extends javax.swing.JPanel {
     private void cmbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSortActionPerformed
         String selected = cmbSort.getSelectedItem().toString();
 
-    if(selected.equals("Name Asc")) {
-        sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.ASCENDING)));
-
-    } else if(selected.equals("Name Desc")) {
-        sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.DESCENDING)));
-
-    } else if(selected.equals("Price Asc")) {
-
-        sorter.setSortKeys(
-            java.util.List.of(
-                new javax.swing.RowSorter.SortKey(
-                    3,
-                    javax.swing.SortOrder.ASCENDING
-                )
-            )
-        );
-
-    } else if(selected.equals("Price Desc")) {
-
-        sorter.setSortKeys(
-            java.util.List.of(
-                new javax.swing.RowSorter.SortKey(
-                    3,
-                    javax.swing.SortOrder.DESCENDING
-                )
-            )
-        );
-    }
+        switch (selected) {
+            case "Name Asc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.ASCENDING)));
+            case "Name Desc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.DESCENDING)));
+            case "Price Asc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(3,javax.swing.SortOrder.ASCENDING)));
+            case "Price Desc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(3,javax.swing.SortOrder.DESCENDING)));
+            case "Quantity Asc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(5,javax.swing.SortOrder.ASCENDING)));
+            case "Quantity Desc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(5,javax.swing.SortOrder.DESCENDING)));
+            default -> {
+            }
+        }
 
     }//GEN-LAST:event_cmbSortActionPerformed
 
@@ -372,45 +353,33 @@ public class InventoryTabPanel extends javax.swing.JPanel {
 
         String name = javax.swing.JOptionPane.showInputDialog(this,"Product Name:");
 
-        double price =
-                Double.parseDouble(javax.swing.JOptionPane.showInputDialog(this,"Unit Price:"));
+        double price = Double.parseDouble(javax.swing.JOptionPane.showInputDialog(this,"Unit Price:"));
 
-        int qty =
-                Integer.parseInt(
-                        javax.swing.JOptionPane.showInputDialog(this,"Quantity:"));
+        int qty = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Quantity:"));
 
-        int reorderLevel =
-                Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Reorder Level:"));
+        int reorderLevel = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Reorder Level:"));
 
         Supplier supplier = null;
 
         Product product;
 
-        if (category.equals("Raw Ingredients")) {
+             switch (category) {
+                 case "Raw Ingredients" -> {
+                     String unit = javax.swing.JOptionPane.showInputDialog(this,"Unit of Measure:");
+                     String expiration = javax.swing.JOptionPane.showInputDialog(this,"Expiration Date (YYYY-MM-DD):");
+                     product = new RawIngredient(id,name,price,qty,reorderLevel,supplier,unit,expiration);
+                 }
+                 case "Packaging Items" -> {
+                     String dimensions = javax.swing.JOptionPane.showInputDialog(this,"Dimensions:");
+                     int piecesPerPack = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Pieces Per Pack:"));
+                     product = new PackagingItems(id,name,price,qty,reorderLevel,supplier,dimensions,piecesPerPack);
+                 }
+                 default -> {
+                     int warrantyMonths = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Warranty Months:"));
 
-            String unit =
-                    javax.swing.JOptionPane.showInputDialog(this,"Unit of Measure:");
-
-            String expiration =
-                    javax.swing.JOptionPane.showInputDialog(this,"Expiration Date (YYYY-MM-DD):");
-
-            product = new RawIngredient(id,name,price,qty,reorderLevel,supplier,unit,expiration);
-
-        } else if (category.equals("Packaging Items")) {
-
-            String dimensions =
-                    javax.swing.JOptionPane.showInputDialog(this,"Dimensions:");
-
-            int piecesPerPack = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Pieces Per Pack:"));
-
-            product = new PackagingItems(id,name,price,qty,reorderLevel,supplier,dimensions,piecesPerPack);
-
-        } else {
-
-            int warrantyMonths = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Warranty Months:"));
-
-            product = new BakingTools(id,name,price,qty,reorderLevel,supplier,warrantyMonths);
-        }
+                     product = new BakingTools(id,name,price,qty,reorderLevel,supplier,warrantyMonths);
+                 }
+             }
 
         inventory.addProduct(product);
 
