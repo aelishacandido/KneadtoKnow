@@ -35,8 +35,7 @@ public class InventoryTabPanel extends javax.swing.JPanel {
     }
     private void loadProductsToTable() {
 
-    DefaultTableModel model =
-            (DefaultTableModel) tblProducts.getModel();
+    DefaultTableModel model = (DefaultTableModel) tblProducts.getModel();
 
     model.setRowCount(0);
 
@@ -76,6 +75,7 @@ public class InventoryTabPanel extends javax.swing.JPanel {
         btnStockOut = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 204, 204));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(114, 92, 63), 2));
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
@@ -183,38 +183,42 @@ public class InventoryTabPanel extends javax.swing.JPanel {
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(btnStockIn, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnStockIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnStockOut, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5)
+                                .addComponent(jLabel5))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSearch)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnSearch)
-                                    .addGap(46, 46, 46)
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(42, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(45, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,16 +240,17 @@ public class InventoryTabPanel extends javax.swing.JPanel {
                     .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnStockOut, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnStockIn, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnStockIn, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10))
         );
 
@@ -283,34 +288,16 @@ public class InventoryTabPanel extends javax.swing.JPanel {
     private void cmbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSortActionPerformed
         String selected = cmbSort.getSelectedItem().toString();
 
-    if(selected.equals("Name Asc")) {
-        sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.ASCENDING)));
-
-    } else if(selected.equals("Name Desc")) {
-        sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.DESCENDING)));
-
-    } else if(selected.equals("Price Asc")) {
-
-        sorter.setSortKeys(
-            java.util.List.of(
-                new javax.swing.RowSorter.SortKey(
-                    3,
-                    javax.swing.SortOrder.ASCENDING
-                )
-            )
-        );
-
-    } else if(selected.equals("Price Desc")) {
-
-        sorter.setSortKeys(
-            java.util.List.of(
-                new javax.swing.RowSorter.SortKey(
-                    3,
-                    javax.swing.SortOrder.DESCENDING
-                )
-            )
-        );
-    }
+        switch (selected) {
+            case "Name Asc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.ASCENDING)));
+            case "Name Desc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(1,javax.swing.SortOrder.DESCENDING)));
+            case "Price Asc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(3,javax.swing.SortOrder.ASCENDING)));
+            case "Price Desc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(3,javax.swing.SortOrder.DESCENDING)));
+            case "Quantity Asc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(5,javax.swing.SortOrder.ASCENDING)));
+            case "Quantity Desc" -> sorter.setSortKeys(java.util.List.of(new javax.swing.RowSorter.SortKey(5,javax.swing.SortOrder.DESCENDING)));
+            default -> {
+            }
+        }
 
     }//GEN-LAST:event_cmbSortActionPerformed
 
@@ -366,45 +353,33 @@ public class InventoryTabPanel extends javax.swing.JPanel {
 
         String name = javax.swing.JOptionPane.showInputDialog(this,"Product Name:");
 
-        double price =
-                Double.parseDouble(javax.swing.JOptionPane.showInputDialog(this,"Unit Price:"));
+        double price = Double.parseDouble(javax.swing.JOptionPane.showInputDialog(this,"Unit Price:"));
 
-        int qty =
-                Integer.parseInt(
-                        javax.swing.JOptionPane.showInputDialog(this,"Quantity:"));
+        int qty = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Quantity:"));
 
-        int reorderLevel =
-                Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Reorder Level:"));
+        int reorderLevel = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Reorder Level:"));
 
         Supplier supplier = null;
 
         Product product;
 
-        if (category.equals("Raw Ingredients")) {
+             switch (category) {
+                 case "Raw Ingredients" -> {
+                     String unit = javax.swing.JOptionPane.showInputDialog(this,"Unit of Measure:");
+                     String expiration = javax.swing.JOptionPane.showInputDialog(this,"Expiration Date (YYYY-MM-DD):");
+                     product = new RawIngredient(id,name,price,qty,reorderLevel,supplier,unit,expiration);
+                 }
+                 case "Packaging Items" -> {
+                     String dimensions = javax.swing.JOptionPane.showInputDialog(this,"Dimensions:");
+                     int piecesPerPack = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Pieces Per Pack:"));
+                     product = new PackagingItems(id,name,price,qty,reorderLevel,supplier,dimensions,piecesPerPack);
+                 }
+                 default -> {
+                     int warrantyMonths = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Warranty Months:"));
 
-            String unit =
-                    javax.swing.JOptionPane.showInputDialog(this,"Unit of Measure:");
-
-            String expiration =
-                    javax.swing.JOptionPane.showInputDialog(this,"Expiration Date (YYYY-MM-DD):");
-
-            product = new RawIngredient(id,name,price,qty,reorderLevel,supplier,unit,expiration);
-
-        } else if (category.equals("Packaging Items")) {
-
-            String dimensions =
-                    javax.swing.JOptionPane.showInputDialog(this,"Dimensions:");
-
-            int piecesPerPack = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Pieces Per Pack:"));
-
-            product = new PackagingItems(id,name,price,qty,reorderLevel,supplier,dimensions,piecesPerPack);
-
-        } else {
-
-            int warrantyMonths = Integer.parseInt(javax.swing.JOptionPane.showInputDialog(this,"Warranty Months:"));
-
-            product = new BakingTools(id,name,price,qty,reorderLevel,supplier,warrantyMonths);
-        }
+                     product = new BakingTools(id,name,price,qty,reorderLevel,supplier,warrantyMonths);
+                 }
+             }
 
         inventory.addProduct(product);
 

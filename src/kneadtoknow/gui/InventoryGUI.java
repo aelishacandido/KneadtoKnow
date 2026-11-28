@@ -64,6 +64,7 @@ public class InventoryGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("KneadToKnow Inventory System");
 
+        jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(114, 92, 63), 2));
         jTabbedPane1.setForeground(new java.awt.Color(204, 102, 0));
         jTabbedPane1.setFont(new java.awt.Font("Bookman Old Style", 1, 12)); // NOI18N
 
@@ -73,11 +74,11 @@ public class InventoryGUI extends javax.swing.JFrame {
         InventoryPanel.setLayout(InventoryPanelLayout);
         InventoryPanelLayout.setHorizontalGroup(
             InventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 557, Short.MAX_VALUE)
+            .addGap(0, 553, Short.MAX_VALUE)
         );
         InventoryPanelLayout.setVerticalGroup(
             InventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 261, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Inventory", InventoryPanel);
@@ -88,11 +89,11 @@ public class InventoryGUI extends javax.swing.JFrame {
         PosPanel.setLayout(PosPanelLayout);
         PosPanelLayout.setHorizontalGroup(
             PosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 557, Short.MAX_VALUE)
+            .addGap(0, 553, Short.MAX_VALUE)
         );
         PosPanelLayout.setVerticalGroup(
             PosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 261, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("POS", PosPanel);
@@ -103,11 +104,11 @@ public class InventoryGUI extends javax.swing.JFrame {
         ReportsPanel.setLayout(ReportsPanelLayout);
         ReportsPanelLayout.setHorizontalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 557, Short.MAX_VALUE)
+            .addGap(0, 553, Short.MAX_VALUE)
         );
         ReportsPanelLayout.setVerticalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 261, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Reports", ReportsPanel);
@@ -118,11 +119,11 @@ public class InventoryGUI extends javax.swing.JFrame {
         HistoryPanel.setLayout(HistoryPanelLayout);
         HistoryPanelLayout.setHorizontalGroup(
             HistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 557, Short.MAX_VALUE)
+            .addGap(0, 553, Short.MAX_VALUE)
         );
         HistoryPanelLayout.setVerticalGroup(
             HistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 261, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("History", HistoryPanel);
@@ -133,11 +134,11 @@ public class InventoryGUI extends javax.swing.JFrame {
         AnalyticsPanel.setLayout(AnalyticsPanelLayout);
         AnalyticsPanelLayout.setHorizontalGroup(
             AnalyticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 557, Short.MAX_VALUE)
+            .addGap(0, 553, Short.MAX_VALUE)
         );
         AnalyticsPanelLayout.setVerticalGroup(
             AnalyticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 261, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Analytics", AnalyticsPanel);
