@@ -8,8 +8,34 @@ public class InventoryGUI extends javax.swing.JFrame {
      * Creates new form InventoryGUI
      */
     public InventoryGUI() {
-        initComponents();
-    }
+    initComponents();
+
+    InventoryPanel.setLayout(new java.awt.BorderLayout());
+
+    InventoryPanel.add(new InventoryTabPanel(),java.awt.BorderLayout.CENTER);
+    
+ /*  PosPanel.setLayout(new java.awt.BorderLayout());
+
+    PosPanel.add(new POSTabPanel(),java.awt.BorderLayout.CENTER);
+    
+    ReportsPanel.setLayout(new java.awt.BorderLayout());
+
+    ReportsPanel.add(new ReportsTabPanel(),java.awt.BorderLayout.CENTER);
+    
+    HistoryPanel.setLayout(new java.awt.BorderLayout());
+
+    HistoryPanel.add(new HistoryTabPanel(),java.awt.BorderLayout.CENTER);
+    
+    AnalyticsPanel.setLayout(new java.awt.BorderLayout());
+
+    AnalyticsPanel.add(new AnalyticsTabPanel(),java.awt.BorderLayout.CENTER);
+    
+    */
+
+    setLocationRelativeTo(null);
+
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -21,11 +47,11 @@ public class InventoryGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        InventoryPanel = new javax.swing.JPanel();
+        PosPanel = new javax.swing.JPanel();
+        ReportsPanel = new javax.swing.JPanel();
+        HistoryPanel = new javax.swing.JPanel();
+        AnalyticsPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("KneadToKnow Inventory System");
@@ -33,86 +59,86 @@ public class InventoryGUI extends javax.swing.JFrame {
         jTabbedPane1.setForeground(new java.awt.Color(204, 102, 0));
         jTabbedPane1.setFont(new java.awt.Font("Bookman Old Style", 1, 12)); // NOI18N
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
+        InventoryPanel.setBackground(new java.awt.Color(255, 204, 204));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout InventoryPanelLayout = new javax.swing.GroupLayout(InventoryPanel);
+        InventoryPanel.setLayout(InventoryPanelLayout);
+        InventoryPanelLayout.setHorizontalGroup(
+            InventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 557, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        InventoryPanelLayout.setVerticalGroup(
+            InventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 265, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Inventory", jPanel1);
+        jTabbedPane1.addTab("Inventory", InventoryPanel);
 
-        jPanel2.setBackground(new java.awt.Color(255, 204, 204));
+        PosPanel.setBackground(new java.awt.Color(255, 204, 204));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout PosPanelLayout = new javax.swing.GroupLayout(PosPanel);
+        PosPanel.setLayout(PosPanelLayout);
+        PosPanelLayout.setHorizontalGroup(
+            PosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 557, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PosPanelLayout.setVerticalGroup(
+            PosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 265, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("POS", jPanel2);
+        jTabbedPane1.addTab("POS", PosPanel);
 
-        jPanel3.setBackground(new java.awt.Color(255, 204, 204));
+        ReportsPanel.setBackground(new java.awt.Color(255, 204, 204));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout ReportsPanelLayout = new javax.swing.GroupLayout(ReportsPanel);
+        ReportsPanel.setLayout(ReportsPanelLayout);
+        ReportsPanelLayout.setHorizontalGroup(
+            ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 557, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        ReportsPanelLayout.setVerticalGroup(
+            ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 265, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Reports", jPanel3);
+        jTabbedPane1.addTab("Reports", ReportsPanel);
 
-        jPanel4.setBackground(new java.awt.Color(255, 204, 204));
+        HistoryPanel.setBackground(new java.awt.Color(255, 204, 204));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout HistoryPanelLayout = new javax.swing.GroupLayout(HistoryPanel);
+        HistoryPanel.setLayout(HistoryPanelLayout);
+        HistoryPanelLayout.setHorizontalGroup(
+            HistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 557, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        HistoryPanelLayout.setVerticalGroup(
+            HistoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 265, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("History", jPanel4);
+        jTabbedPane1.addTab("History", HistoryPanel);
 
-        jPanel5.setBackground(new java.awt.Color(255, 204, 204));
+        AnalyticsPanel.setBackground(new java.awt.Color(255, 204, 204));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout AnalyticsPanelLayout = new javax.swing.GroupLayout(AnalyticsPanel);
+        AnalyticsPanel.setLayout(AnalyticsPanelLayout);
+        AnalyticsPanelLayout.setHorizontalGroup(
+            AnalyticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 557, Short.MAX_VALUE)
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        AnalyticsPanelLayout.setVerticalGroup(
+            AnalyticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 265, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Analytics", jPanel5);
+        jTabbedPane1.addTab("Analytics", AnalyticsPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,11 +174,11 @@ public class InventoryGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel AnalyticsPanel;
+    private javax.swing.JPanel HistoryPanel;
+    private javax.swing.JPanel InventoryPanel;
+    private javax.swing.JPanel PosPanel;
+    private javax.swing.JPanel ReportsPanel;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
