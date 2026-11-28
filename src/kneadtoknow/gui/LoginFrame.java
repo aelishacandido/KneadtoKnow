@@ -1,37 +1,45 @@
 package kneadtoknow.gui;
 
-// import kneadtoknow.core.Inventory; // will uncomment once Inventory is ready
-import kneadtoknow.model.AdminUser;
-import kneadtoknow.model.StaffUser;
-import kneadtoknow.model.User;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import kneadtoknow.core.Inventory;
+import kneadtoknow.model.AdminUser;
+import kneadtoknow.model.StaffUser;
+import kneadtoknow.model.User;
 
 public class LoginFrame extends javax.swing.JFrame {
-        
-    // private final Inventory inventory;
+
+    private static final Color BG_BLUSH = new Color(250, 218, 221);
+
+    private Inventory inventory;
     private final List<User> users;
-    
+
     public LoginFrame() {
         initComponents();
+        getContentPane().setBackground(BG_BLUSH);
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btnLogin);
-        
+
         txtUsername.setText("");
         txtPassword.setText("");
-        
+
         this.users = new ArrayList<>();
         this.users.add(new AdminUser("admin", "admin123"));
         this.users.add(new StaffUser("staff", "staff123"));
     }
-    
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
     private void handleLogin() {
         String username = txtUsername.getText().trim();
         String password = new String(txtPassword.getPassword());
 
         if (username.isEmpty() || username.equals("Username")
-            || password.isEmpty() || password.equals("Password")) {
+                || password.isEmpty() || password.equals("Password")) {
             JOptionPane.showMessageDialog(
                     this,
                     "Please enter both username and password.",
@@ -52,13 +60,15 @@ public class LoginFrame extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE
                 );
 
-                // TODO: Once Inventory and InventoryGUI are ready, replace the popup above with:
-                // new InventoryGUI(inventory, user).setVisible(true);
-                // this.dispose();
+                Inventory activeInventory = (this.inventory != null) ? this.inventory : new Inventory();
+                InventoryGUI gui = new InventoryGUI(activeInventory, user);
+                gui.setLocationRelativeTo(null);
+                gui.setVisible(true);
+                this.dispose();
                 return;
             }
         }
-        
+
         txtPassword.setText("");
         JOptionPane.showMessageDialog(
                 this,
@@ -67,12 +77,12 @@ public class LoginFrame extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE
         );
     }
-    
+
     private void handleCancel() {
         this.dispose();
         System.exit(0);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -89,47 +99,50 @@ public class LoginFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Knead to Know - Login");
-        setBackground(new java.awt.Color(249, 246, 240));
+        setBackground(new java.awt.Color(250, 218, 221));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(400, 300));
         setPreferredSize(new java.awt.Dimension(395, 320));
         setResizable(false);
 
+        lblLogin.setBackground(new java.awt.Color(250, 218, 221));
         lblLogin.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
-        lblLogin.setForeground(new java.awt.Color(35, 35, 35));
+        lblLogin.setForeground(new java.awt.Color(242, 166, 184));
         lblLogin.setText("Login");
 
         lblUsername.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        lblUsername.setForeground(new java.awt.Color(41, 39, 38));
         lblUsername.setText("Username:");
 
         sublblLogin.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
         sublblLogin.setForeground(new java.awt.Color(140, 140, 140));
         sublblLogin.setText("Sign in to manage baking suppiles stock & sales.");
 
-        txtUsername.setBackground(new java.awt.Color(255, 255, 255));
+        txtUsername.setBackground(new java.awt.Color(245, 240, 230));
         txtUsername.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
-        txtUsername.setForeground(new java.awt.Color(62, 39, 35));
-        txtUsername.setText("Enter your username");
+        txtUsername.setForeground(new java.awt.Color(41, 39, 38));
         txtUsername.setToolTipText("");
         txtUsername.setPreferredSize(new java.awt.Dimension(210, 32));
 
         lblPassword.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(41, 39, 38));
         lblPassword.setText("Password:");
 
-        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
+        txtPassword.setBackground(new java.awt.Color(245, 240, 230));
         txtPassword.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
-        txtPassword.setForeground(new java.awt.Color(62, 39, 35));
-        txtPassword.setText("12345");
+        txtPassword.setForeground(new java.awt.Color(41, 39, 38));
         txtPassword.setPreferredSize(new java.awt.Dimension(210, 32));
         txtPassword.addActionListener(this::txtPasswordActionPerformed);
 
-        btnLogin.setBackground(new java.awt.Color(74, 44, 24));
+        btnLogin.setBackground(new java.awt.Color(242, 166, 184));
         btnLogin.setFont(new java.awt.Font("Bookman Old Style", 0, 13)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogin.setForeground(new java.awt.Color(41, 39, 38));
         btnLogin.setText("Login");
         btnLogin.addActionListener(this::btnLoginActionPerformed);
 
+        chkShowPassword.setBackground(new java.awt.Color(250, 218, 221));
         chkShowPassword.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        chkShowPassword.setForeground(new java.awt.Color(41, 39, 38));
         chkShowPassword.setText("Show Password");
         chkShowPassword.addActionListener(this::chkShowPasswordActionPerformed);
 
@@ -159,7 +172,7 @@ public class LoginFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +195,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addComponent(btnLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         lblLogin.getAccessibleContext().setAccessibleName("lblLogin");
@@ -204,10 +217,10 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void chkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkShowPasswordActionPerformed
         if (chkShowPassword.isSelected()) {
-        txtPassword.setEchoChar((char) 0);
-    } else {
-        txtPassword.setEchoChar('•');
-    }
+            txtPassword.setEchoChar((char) 0);
+        } else {
+            txtPassword.setEchoChar('•');
+        }
     }//GEN-LAST:event_chkShowPasswordActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

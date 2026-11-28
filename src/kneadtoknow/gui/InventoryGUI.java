@@ -1,6 +1,7 @@
 package kneadtoknow.gui;
 
 import kneadtoknow.core.Inventory;
+import kneadtoknow.model.User;
 
 public class InventoryGUI extends javax.swing.JFrame {
 
@@ -9,9 +10,6 @@ public class InventoryGUI extends javax.swing.JFrame {
     private final Inventory inventory;
     private ReportsTabPanel reportsTabPanel;
 
-    /**
-     * Creates new form InventoryGUI
-     */
     public InventoryGUI() {
         this(new Inventory());
     }
@@ -21,6 +19,21 @@ public class InventoryGUI extends javax.swing.JFrame {
         initComponents();
         initTabPanels();
         setLocationRelativeTo(null);
+    }
+
+    private void onLoginSuccess() {
+        Inventory activeInventory = (this.inventory != null) ? this.inventory : new Inventory();
+        InventoryGUI inventoryGUI = new InventoryGUI(activeInventory);
+        inventoryGUI.setLocationRelativeTo(null);
+        inventoryGUI.setVisible(true);
+        this.dispose();
+    }
+
+    private User currentUser;
+
+    public InventoryGUI(Inventory inventory, User user) {
+        this(inventory);
+        this.currentUser = user;
     }
 
     private void initTabPanels() {
