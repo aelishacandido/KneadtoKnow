@@ -11,27 +11,20 @@ public class InventoryGUI extends javax.swing.JFrame {
     initComponents();
 
     InventoryPanel.setLayout(new java.awt.BorderLayout());
-
     InventoryPanel.add(new InventoryTabPanel(),java.awt.BorderLayout.CENTER);
     
- /*  PosPanel.setLayout(new java.awt.BorderLayout());
-
+    PosPanel.setLayout(new java.awt.BorderLayout());
     PosPanel.add(new POSTabPanel(),java.awt.BorderLayout.CENTER);
     
-    ReportsPanel.setLayout(new java.awt.BorderLayout());
-
+    /* ReportsPanel.setLayout(new java.awt.BorderLayout());
     ReportsPanel.add(new ReportsTabPanel(),java.awt.BorderLayout.CENTER);
-    
+    */
     HistoryPanel.setLayout(new java.awt.BorderLayout());
-
     HistoryPanel.add(new HistoryTabPanel(),java.awt.BorderLayout.CENTER);
     
     AnalyticsPanel.setLayout(new java.awt.BorderLayout());
-
     AnalyticsPanel.add(new AnalyticsTabPanel(),java.awt.BorderLayout.CENTER);
     
-    */
-
     setLocationRelativeTo(null);
 
 }

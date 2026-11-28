@@ -463,18 +463,20 @@ public class POSTabPanel extends javax.swing.JPanel {
         lblStatus = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 204, 204));
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setForeground(new java.awt.Color(255, 204, 204));
         setLayout(new java.awt.BorderLayout());
 
+        pnlTop.setBackground(new java.awt.Color(250, 218, 221));
         pnlTop.setLayout(new java.awt.GridLayout(2, 1));
 
-        pnlHeader.setBackground(new java.awt.Color(255, 204, 204));
+        pnlHeader.setBackground(new java.awt.Color(242, 166, 184));
         pnlHeader.setMaximumSize(new java.awt.Dimension(32767, 52));
         pnlHeader.setPreferredSize(new java.awt.Dimension(600, 38));
 
         jLabel2.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("POS / Point of Sale");
+        jLabel2.setForeground(new java.awt.Color(84, 51, 36));
+        jLabel2.setText("Point of Sale / POS");
 
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
@@ -483,7 +485,7 @@ public class POSTabPanel extends javax.swing.JPanel {
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(752, Short.MAX_VALUE))
+                .addContainerGap(748, Short.MAX_VALUE))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -495,25 +497,34 @@ public class POSTabPanel extends javax.swing.JPanel {
 
         pnlTop.add(pnlHeader);
 
-        pnlFilter.setPreferredSize(new java.awt.Dimension(525, 23));
+        pnlFilter.setBackground(new java.awt.Color(250, 218, 221));
+        pnlFilter.setPreferredSize(new java.awt.Dimension(525, 18));
 
-        jLabel3.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(107, 68, 52));
         jLabel3.setText("Search:");
         pnlFilter.add(jLabel3);
 
+        txtSearch.setBackground(new java.awt.Color(245, 240, 230));
         txtSearch.setColumns(18);
         txtSearch.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        txtSearch.setForeground(new java.awt.Color(107, 68, 52));
         pnlFilter.add(txtSearch);
 
-        jLabel4.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(107, 68, 52));
         jLabel4.setText("Category:");
         pnlFilter.add(jLabel4);
 
-        cmbCategory.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
-        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCategory.setBackground(new java.awt.Color(245, 240, 230));
+        cmbCategory.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        cmbCategory.setForeground(new java.awt.Color(107, 68, 52));
+        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Baking Tools", "Raw Ingredients", "Packaging Items" }));
         pnlFilter.add(cmbCategory);
 
-        btnClear.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        btnClear.setBackground(new java.awt.Color(219, 215, 208));
+        btnClear.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        btnClear.setForeground(new java.awt.Color(41, 39, 38));
         btnClear.setText("Clear");
         pnlFilter.add(btnClear);
 
@@ -521,17 +532,49 @@ public class POSTabPanel extends javax.swing.JPanel {
 
         add(pnlTop, java.awt.BorderLayout.NORTH);
 
+        pnlMain.setBackground(new java.awt.Color(250, 218, 221));
         pnlMain.setLayout(new java.awt.GridLayout(1, 3, 10, 10));
 
+        pnlCatalog.setBackground(new java.awt.Color(250, 218, 221));
         pnlCatalog.setLayout(new java.awt.BorderLayout(6, 6));
 
-        jLabel5.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
+        jLabel5.setBackground(new java.awt.Color(250, 218, 221));
+        jLabel5.setFont(new java.awt.Font("Bookman Old Style", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(107, 68, 52));
         jLabel5.setText("Available Baking Supplies");
         pnlCatalog.add(jLabel5, java.awt.BorderLayout.NORTH);
 
+        jTable1.setAutoCreateRowSorter(true);
+        jTable1.setBackground(new java.awt.Color(245, 240, 230));
         jTable1.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -563,14 +606,18 @@ public class POSTabPanel extends javax.swing.JPanel {
 
         pnlCatalog.add(tblProducts, java.awt.BorderLayout.CENTER);
 
+        pnlCatalogBottom.setBackground(new java.awt.Color(250, 218, 221));
         pnlCatalogBottom.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel6.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(107, 68, 52));
         jLabel6.setText("Qty:");
         pnlCatalogBottom.add(jLabel6);
         pnlCatalogBottom.add(spnQty);
 
-        btnAddToCart.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        btnAddToCart.setBackground(new java.awt.Color(98, 148, 196));
+        btnAddToCart.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        btnAddToCart.setForeground(new java.awt.Color(59, 36, 24));
         btnAddToCart.setText("Add to Cart");
         pnlCatalogBottom.add(btnAddToCart);
 
@@ -578,14 +625,44 @@ public class POSTabPanel extends javax.swing.JPanel {
 
         pnlMain.add(pnlCatalog);
 
+        pnlCart.setBackground(new java.awt.Color(250, 218, 221));
         pnlCart.setLayout(new java.awt.BorderLayout(6, 6));
 
-        jLabel7.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
+        jLabel7.setBackground(new java.awt.Color(250, 218, 221));
+        jLabel7.setFont(new java.awt.Font("Bookman Old Style", 1, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(107, 68, 52));
         jLabel7.setText("Current Sale / Cart");
         pnlCart.add(jLabel7, java.awt.BorderLayout.NORTH);
 
+        jTable2.setBackground(new java.awt.Color(245, 240, 230));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -617,96 +694,123 @@ public class POSTabPanel extends javax.swing.JPanel {
 
         pnlCart.add(tblCart, java.awt.BorderLayout.CENTER);
 
+        pnlCartBottom.setBackground(new java.awt.Color(250, 218, 221));
         pnlCartBottom.setLayout(new javax.swing.BoxLayout(pnlCartBottom, javax.swing.BoxLayout.Y_AXIS));
 
+        pnlActionRow.setBackground(new java.awt.Color(250, 218, 221));
         pnlActionRow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        btnRemoveItem.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        btnRemoveItem.setBackground(new java.awt.Color(219, 98, 110));
+        btnRemoveItem.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        btnRemoveItem.setForeground(new java.awt.Color(59, 36, 24));
         btnRemoveItem.setText("Remove Selected");
         pnlActionRow.add(btnRemoveItem);
 
-        btnClearCart.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        btnClearCart.setBackground(new java.awt.Color(219, 215, 208));
+        btnClearCart.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        btnClearCart.setForeground(new java.awt.Color(41, 39, 38));
         btnClearCart.setText("Clear Cart");
         pnlActionRow.add(btnClearCart);
 
         pnlCartBottom.add(pnlActionRow);
 
+        pnlLoyalty.setBackground(new java.awt.Color(250, 218, 221));
         pnlLoyalty.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 2));
 
-        chkLoyaltyDiscount.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        chkLoyaltyDiscount.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        chkLoyaltyDiscount.setForeground(new java.awt.Color(107, 68, 52));
         chkLoyaltyDiscount.setText("Loyalty Discount (5%)");
         pnlLoyalty.add(chkLoyaltyDiscount);
 
         pnlCartBottom.add(pnlLoyalty);
 
+        pnlBulk.setBackground(new java.awt.Color(250, 218, 221));
         pnlBulk.setMaximumSize(new java.awt.Dimension(32767, 30));
         pnlBulk.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 4, 2));
 
-        lblBulkDiscount.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        lblBulkDiscount.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        lblBulkDiscount.setForeground(new java.awt.Color(102, 168, 134));
         lblBulkDiscount.setText("Bulk Discount: 5+ items for 10%");
         pnlBulk.add(lblBulkDiscount);
 
         pnlCartBottom.add(pnlBulk);
 
+        pnlSubTotal.setBackground(new java.awt.Color(250, 218, 221));
         pnlSubTotal.setMaximumSize(new java.awt.Dimension(32767, 30));
         pnlSubTotal.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 4, 2));
 
-        jLabel9.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(107, 68, 52));
         jLabel9.setText("Subtotal:");
         pnlSubTotal.add(jLabel9);
 
-        lblSubtotal.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        lblSubtotal.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        lblSubtotal.setForeground(new java.awt.Color(107, 68, 52));
         lblSubtotal.setText("PHP 0.00");
         pnlSubTotal.add(lblSubtotal);
 
         pnlCartBottom.add(pnlSubTotal);
 
+        pnlDiscount.setBackground(new java.awt.Color(250, 218, 221));
         pnlDiscount.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 4, 2));
 
-        jLabel10.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(107, 68, 52));
         jLabel10.setText("Discount:");
         pnlDiscount.add(jLabel10);
 
-        lblDiscount.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        lblDiscount.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        lblDiscount.setForeground(new java.awt.Color(219, 98, 110));
         lblDiscount.setText("-PHP 0.00");
         pnlDiscount.add(lblDiscount);
 
         pnlCartBottom.add(pnlDiscount);
 
+        pnlTotal.setBackground(new java.awt.Color(250, 218, 221));
         pnlTotal.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 4, 2));
 
         jLabel8.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(107, 68, 52));
         jLabel8.setText("Total:");
         pnlTotal.add(jLabel8);
 
         lblTotal.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(107, 68, 52));
         lblTotal.setText("PHP 0.00");
         pnlTotal.add(lblTotal);
 
         pnlCartBottom.add(pnlTotal);
 
+        pnlCashChange.setBackground(new java.awt.Color(250, 218, 221));
         pnlCashChange.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 4, 2));
 
-        jLabel11.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(107, 68, 52));
         jLabel11.setText("Cash:");
         pnlCashChange.add(jLabel11);
 
+        txtCashTendered.setBackground(new java.awt.Color(245, 240, 230));
         txtCashTendered.setColumns(10);
         pnlCashChange.add(txtCashTendered);
 
-        jLabel12.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(107, 68, 52));
         jLabel12.setText("Change:");
         pnlCashChange.add(jLabel12);
 
-        lblChange.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
+        lblChange.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        lblChange.setForeground(new java.awt.Color(107, 68, 52));
         lblChange.setText("PHP 0.00");
         pnlCashChange.add(lblChange);
 
         pnlCartBottom.add(pnlCashChange);
 
+        pnlCheckout.setBackground(new java.awt.Color(250, 218, 221));
         pnlCheckout.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 4, 2));
 
-        btnCheckout.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        btnCheckout.setBackground(new java.awt.Color(102, 168, 134));
+        btnCheckout.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        btnCheckout.setForeground(new java.awt.Color(107, 68, 52));
         btnCheckout.setText("Checkout");
         pnlCheckout.add(btnCheckout);
 
@@ -716,13 +820,17 @@ public class POSTabPanel extends javax.swing.JPanel {
 
         pnlMain.add(pnlCart);
 
+        pnlReceipt.setBackground(new java.awt.Color(250, 218, 221));
         pnlReceipt.setLayout(new java.awt.BorderLayout(4, 6));
 
-        jLabel13.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
+        jLabel13.setBackground(new java.awt.Color(250, 218, 221));
+        jLabel13.setFont(new java.awt.Font("Bookman Old Style", 1, 16)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(107, 68, 52));
         jLabel13.setText("Receipt Preview");
         pnlReceipt.add(jLabel13, java.awt.BorderLayout.NORTH);
 
         jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(245, 240, 230));
         jTextArea1.setColumns(20);
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
@@ -731,13 +839,18 @@ public class POSTabPanel extends javax.swing.JPanel {
 
         pnlReceipt.add(txtReceipt, java.awt.BorderLayout.CENTER);
 
+        jPanel1.setBackground(new java.awt.Color(250, 218, 221));
         jPanel1.setLayout(new java.awt.GridLayout(2, 1, 6, 6));
 
-        btnPrintReceipt.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        btnPrintReceipt.setBackground(new java.awt.Color(98, 148, 196));
+        btnPrintReceipt.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        btnPrintReceipt.setForeground(new java.awt.Color(107, 68, 52));
         btnPrintReceipt.setText("Print / Copy");
         jPanel1.add(btnPrintReceipt);
 
-        btnNewSale.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        btnNewSale.setBackground(new java.awt.Color(102, 168, 134));
+        btnNewSale.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        btnNewSale.setForeground(new java.awt.Color(107, 68, 52));
         btnNewSale.setText("New Sale");
         jPanel1.add(btnNewSale);
 
@@ -747,10 +860,13 @@ public class POSTabPanel extends javax.swing.JPanel {
 
         add(pnlMain, java.awt.BorderLayout.CENTER);
 
+        pnlStatus.setBackground(new java.awt.Color(250, 218, 221));
+
         jLabel1.setFont(new java.awt.Font("Baskerville Old Face", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(107, 68, 52));
         jLabel1.setText("Status:");
 
-        lblStatus.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
+        lblStatus.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
         lblStatus.setForeground(new java.awt.Color(0, 153, 51));
         lblStatus.setText("Ready");
 
@@ -763,13 +879,13 @@ public class POSTabPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(644, Short.MAX_VALUE))
+                .addContainerGap(640, Short.MAX_VALUE))
         );
         pnlStatusLayout.setVerticalGroup(
             pnlStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlStatusLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(pnlStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnlStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblStatus))
                 .addContainerGap(68, Short.MAX_VALUE))
