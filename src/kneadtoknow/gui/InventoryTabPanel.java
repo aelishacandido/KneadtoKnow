@@ -64,7 +64,6 @@ public class InventoryTabPanel extends javax.swing.JPanel {
 
         btnSearch.setBackground(new java.awt.Color(216, 215, 178));
         btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Search");
         btnSearch.addActionListener(this::btnSearchActionPerformed);
 
@@ -94,6 +93,8 @@ public class InventoryTabPanel extends javax.swing.JPanel {
         jScrollPane1.setBackground(new java.awt.Color(245, 240, 230));
 
         tblProducts.setBackground(new java.awt.Color(245, 240, 230));
+        tblProducts.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tblProducts.setFont(new java.awt.Font("Baskerville Old Face", 0, 12)); // NOI18N
         tblProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -110,14 +111,12 @@ public class InventoryTabPanel extends javax.swing.JPanel {
 
         btnAdd.setBackground(new java.awt.Color(216, 215, 178));
         btnAdd.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
-        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("Add Product");
         btnAdd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAdd.addActionListener(this::btnAddActionPerformed);
 
         btnEdit.setBackground(new java.awt.Color(216, 215, 178));
         btnEdit.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
-        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Edit Product");
         btnEdit.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnEdit.addActionListener(this::btnEditActionPerformed);
@@ -131,14 +130,12 @@ public class InventoryTabPanel extends javax.swing.JPanel {
 
         btnStockIn.setBackground(new java.awt.Color(208, 167, 123));
         btnStockIn.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
-        btnStockIn.setForeground(new java.awt.Color(255, 255, 255));
         btnStockIn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnStockIn.setLabel("Stock In");
         btnStockIn.addActionListener(this::btnStockInActionPerformed);
 
         btnStockOut.setBackground(new java.awt.Color(208, 167, 123));
         btnStockOut.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
-        btnStockOut.setForeground(new java.awt.Color(255, 255, 255));
         btnStockOut.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnStockOut.setLabel("Stock Out");
         btnStockOut.addActionListener(this::btnStockOutActionPerformed);
