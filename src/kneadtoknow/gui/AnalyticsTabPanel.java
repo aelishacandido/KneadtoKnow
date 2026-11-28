@@ -1,7 +1,5 @@
 package kneadtoknow.gui;
 
-import javax.swing.table.DefaultTableModel;
-
 public class AnalyticsTabPanel extends javax.swing.JPanel {
 
     /**
@@ -9,8 +7,8 @@ public class AnalyticsTabPanel extends javax.swing.JPanel {
      */
     public AnalyticsTabPanel() {
         initComponents();
-        setupAnalyticsTable();
     }
+<<<<<<< HEAD
     
     private void setupAnalyticsTable() {
 
@@ -31,6 +29,8 @@ public class AnalyticsTabPanel extends javax.swing.JPanel {
     // private void updateInventoryHealth() {
 
     //}
+=======
+>>>>>>> origin/master
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,6 +41,7 @@ public class AnalyticsTabPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+<<<<<<< HEAD
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -115,10 +116,13 @@ public class AnalyticsTabPanel extends javax.swing.JPanel {
         txtInventoryHealth.setText("No inventory health data available.");
         txtInventoryHealth.addActionListener(this::txtInventoryHealthActionPerformed);
 
+=======
+>>>>>>> origin/master
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,6 +167,13 @@ public class AnalyticsTabPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtInventoryHealth, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
+=======
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+>>>>>>> origin/master
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -172,6 +183,7 @@ public class AnalyticsTabPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -181,5 +193,7 @@ public class AnalyticsTabPanel extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tblTable;
     private javax.swing.JTextField txtInventoryHealth;
+=======
+>>>>>>> origin/master
     // End of variables declaration//GEN-END:variables
 }

@@ -47,6 +47,10 @@ public class InventoryTabPanel extends javax.swing.JPanel {
         btnStockIn = new javax.swing.JButton();
         btnStockOut = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 204, 204));
+
+        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
+
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         jLabel1.setText("Product Catalog & Controls");
 
@@ -87,23 +91,33 @@ public class InventoryTabPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblProducts);
         tblProducts.getAccessibleContext().setAccessibleName("");
 
+        btnAdd.setBackground(new java.awt.Color(153, 51, 0));
         btnAdd.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
+        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("Add Product");
         btnAdd.addActionListener(this::btnAddActionPerformed);
 
+        btnEdit.setBackground(new java.awt.Color(153, 0, 0));
         btnEdit.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
+        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Edit Product");
         btnEdit.addActionListener(this::btnEditActionPerformed);
 
+        btnDelete.setBackground(new java.awt.Color(102, 0, 0));
         btnDelete.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
+        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setLabel("Delete");
         btnDelete.addActionListener(this::btnDeleteActionPerformed);
 
+        btnStockIn.setBackground(new java.awt.Color(255, 51, 51));
         btnStockIn.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
+        btnStockIn.setForeground(new java.awt.Color(255, 255, 255));
         btnStockIn.setLabel("Stock In");
         btnStockIn.addActionListener(this::btnStockInActionPerformed);
 
+        btnStockOut.setBackground(new java.awt.Color(255, 51, 51));
         btnStockOut.setFont(new java.awt.Font("Baskerville Old Face", 1, 12)); // NOI18N
+        btnStockOut.setForeground(new java.awt.Color(255, 255, 255));
         btnStockOut.setLabel("Stock Out");
         btnStockOut.addActionListener(this::btnStockOutActionPerformed);
 
