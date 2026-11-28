@@ -1,5 +1,7 @@
 package kneadtoknow.gui;
 
+import kneadtoknow.core.Inventory;
+import kneadtoknow.model.StockTransaction;
 import javax.swing.table.DefaultTableModel;
 
 public class HistoryTabPanel extends javax.swing.JPanel {
@@ -7,9 +9,22 @@ public class HistoryTabPanel extends javax.swing.JPanel {
     /**
      * Creates new form HistoryTabPanel
      */
+    
+    private Inventory inventory;
+     
     public HistoryTabPanel() {
         initComponents();
+        
         setupTable();
+    }
+    
+    public HistoryTabPanel(Inventory inventory) {
+        initComponents();
+        
+        this.inventory = inventory;
+
+        setupTable();
+        loadTransactions();
     }
     
     private void setupTable() {
@@ -18,10 +33,11 @@ public class HistoryTabPanel extends javax.swing.JPanel {
         (DefaultTableModel) tblTable.getModel();
 
     model.setColumnIdentifiers(new Object[]{
-        "Seq",
+        "Seq #",
         "Timestamp",
         "Type",
         "Product ID",
+        "Product Name",
         "Quantity"
     });
     
@@ -30,7 +46,32 @@ public class HistoryTabPanel extends javax.swing.JPanel {
     );
 
 }
+    
+    private void loadTransactions() {
+       
+        if (inventory == null) {
+            return;
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) tblTable.getModel();
 
+        model.setRowCount(0);
+
+    for (StockTransaction tx : inventory.getTransactions()) {
+
+        model.addRow(new Object[]{
+            tx.getTransactionId(),
+            tx.getTimestamp(),
+            tx.getType(),
+            tx.getProductId(),
+            tx.getProductName(),
+            tx.getQuantityChanged()
+        });
+
+    }
+ }
+
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,14 +82,14 @@ public class HistoryTabPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jColorChooser1 = new javax.swing.JColorChooser();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+        txtField = new javax.swing.JTextField();
+        lblSearch = new javax.swing.JLabel();
+        btnSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTable = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jButton2 = new javax.swing.JButton();
+        btnUndo = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 228, 225));
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 3, true));
@@ -58,26 +99,26 @@ public class HistoryTabPanel extends javax.swing.JPanel {
         setName("btnUndo"); // NOI18N
         setPreferredSize(new java.awt.Dimension(590, 350));
 
-        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
-        jLabel1.setText("Transaction History");
+        lblTitle.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        lblTitle.setText("Transaction History");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("Search Product ID ...");
-        jTextField1.setName("txtSearch"); // NOI18N
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        txtField.setEditable(false);
+        txtField.setBackground(new java.awt.Color(255, 255, 255));
+        txtField.setForeground(new java.awt.Color(204, 204, 204));
+        txtField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtField.setText("Search Product ID ...");
+        txtField.setName("txtSearch"); // NOI18N
+        txtField.addActionListener(this::txtFieldActionPerformed);
 
-        jLabel2.setText("Search:");
-        jLabel2.setName("lblSearch"); // NOI18N
+        lblSearch.setText("Search:");
+        lblSearch.setName("lblSearch"); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(127, 85, 57));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("Search");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jButton1.setName("btnSearch"); // NOI18N
-        jButton1.setPreferredSize(new java.awt.Dimension(109, 22));
+        btnSearch.setBackground(new java.awt.Color(127, 85, 57));
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSearch.setText("Search");
+        btnSearch.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnSearch.setName("btnSearch"); // NOI18N
+        btnSearch.setPreferredSize(new java.awt.Dimension(109, 22));
 
         tblTable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 1, true));
         tblTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -95,13 +136,13 @@ public class HistoryTabPanel extends javax.swing.JPanel {
         tblTable.setSelectionBackground(new java.awt.Color(255, 228, 225));
         jScrollPane1.setViewportView(tblTable);
 
-        jButton2.setBackground(new java.awt.Color(127, 85, 57));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setText("Undo Last Transaction");
-        jButton2.setToolTipText("");
-        jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jButton2.setName("btnUndo"); // NOI18N
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnUndo.setBackground(new java.awt.Color(127, 85, 57));
+        btnUndo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUndo.setText("Undo Last Transaction");
+        btnUndo.setToolTipText("");
+        btnUndo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnUndo.setName("btnUndo"); // NOI18N
+        btnUndo.addActionListener(this::btnUndoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -111,63 +152,69 @@ public class HistoryTabPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(lblSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtField, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblTitle)
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(195, 195, 195))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jLabel1)
+                .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSearch)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtFieldActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        try {
+            inventory.undoLastTransaction();
+            loadTransactions();
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_btnUndoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnUndo;
     private javax.swing.JColorChooser jColorChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblSearch;
+    private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblTable;
+    private javax.swing.JTextField txtField;
     // End of variables declaration//GEN-END:variables
 }
