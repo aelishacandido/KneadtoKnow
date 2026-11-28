@@ -1,15 +1,30 @@
 package kneadtoknow.gui;
 
+import kneadtoknow.core.Inventory;
+import kneadtoknow.model.StockTransaction;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
+import java.util.Arrays;
 
 public class HistoryTabPanel extends javax.swing.JPanel {
+    
+   private kneadtoknow.core.Inventory inventory;
+    
+    private TableRowSorter<DefaultTableModel> sorter;
 
     /**
      * Creates new form HistoryTabPanel
      */
     public HistoryTabPanel() {
-        initComponents();
-        setupTable();
+    initComponents();
+
+    inventory = new Inventory();
+
+    setupTable();
+    inventory.loadTransactionsFromFile();
+    loadTransactions();
     }
     
     private void setupTable() {
@@ -22,13 +37,36 @@ public class HistoryTabPanel extends javax.swing.JPanel {
         "Timestamp",
         "Type",
         "Product ID",
+        "Product Name",
         "Quantity"
     });
-    
-    tblTable.getTableHeader().setBackground(
-    new java.awt.Color(250, 218, 221)
-    );
 
+    sorter = new TableRowSorter<>(model);
+    tblTable.setRowSorter(sorter);
+
+    tblTable.getTableHeader().setBackground(
+        new java.awt.Color(250, 218, 221)
+    );
+    }
+    
+    private void loadTransactions() {
+
+    DefaultTableModel model =
+            (DefaultTableModel) tblTable.getModel();
+
+    model.setRowCount(0);
+
+    for (StockTransaction tx : inventory.getTransactions()) {
+
+        model.addRow(new Object[] {
+            tx.getTransactionId(),
+            tx.getTimestamp(),
+            tx.getType(),
+            tx.getProductId(),
+            tx.getProductName(),
+            tx.getQuantity()
+        });
+    }
 }
 
     /**
@@ -41,14 +79,16 @@ public class HistoryTabPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jColorChooser1 = new javax.swing.JColorChooser();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        txtLabel = new javax.swing.JLabel();
+        txtField = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTable = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jButton2 = new javax.swing.JButton();
+        btnUndo = new javax.swing.JButton();
+        txtSort = new javax.swing.JLabel();
+        cmbSort = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 228, 225));
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 3, true));
@@ -56,30 +96,32 @@ public class HistoryTabPanel extends javax.swing.JPanel {
         setToolTipText("Undo Last Transaction");
         setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         setName("btnUndo"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(590, 350));
+        setPreferredSize(new java.awt.Dimension(525, 23));
 
-        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
-        jLabel1.setText("Transaction History");
+        txtLabel.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        txtLabel.setForeground(new java.awt.Color(114, 92, 63));
+        txtLabel.setText("Transaction History");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("Search Product ID ...");
-        jTextField1.setName("txtSearch"); // NOI18N
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        txtField.setBackground(new java.awt.Color(255, 255, 255));
+        txtField.setForeground(new java.awt.Color(127, 85, 57));
+        txtField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtField.setName("txtSearch"); // NOI18N
+        txtField.addActionListener(this::txtFieldActionPerformed);
 
-        jLabel2.setText("Search:");
-        jLabel2.setName("lblSearch"); // NOI18N
+        txtSearch.setText("Search Product ID:");
+        txtSearch.setName("lblSearch"); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(127, 85, 57));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton1.setBackground(new java.awt.Color(208, 167, 123));
+        jButton1.setFont(new java.awt.Font("Bookman Old Style", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(245, 240, 230));
         jButton1.setText("Search");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.setName("btnSearch"); // NOI18N
         jButton1.setPreferredSize(new java.awt.Dimension(109, 22));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        tblTable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(127, 85, 57), 1, true));
+        tblTable.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         tblTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -91,17 +133,30 @@ public class HistoryTabPanel extends javax.swing.JPanel {
                 "Seq #", "Timestamp", "Type", "Product ID", "Product Name", "Quantity"
             }
         ));
+        tblTable.setGridColor(new java.awt.Color(127, 85, 57));
         tblTable.setName("tblTable"); // NOI18N
-        tblTable.setSelectionBackground(new java.awt.Color(255, 228, 225));
+        tblTable.setSelectionBackground(new java.awt.Color(102, 168, 134));
         jScrollPane1.setViewportView(tblTable);
 
-        jButton2.setBackground(new java.awt.Color(127, 85, 57));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setText("Undo Last Transaction");
-        jButton2.setToolTipText("");
-        jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jButton2.setName("btnUndo"); // NOI18N
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnUndo.setBackground(new java.awt.Color(242, 166, 184));
+        btnUndo.setFont(new java.awt.Font("Bookman Old Style", 1, 12)); // NOI18N
+        btnUndo.setForeground(new java.awt.Color(127, 85, 57));
+        btnUndo.setText("Undo Last Transaction");
+        btnUndo.setToolTipText("");
+        btnUndo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnUndo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnUndo.setMaximumSize(new java.awt.Dimension(128, 22));
+        btnUndo.setMinimumSize(new java.awt.Dimension(128, 22));
+        btnUndo.setName("btnUndo"); // NOI18N
+        btnUndo.setPreferredSize(new java.awt.Dimension(128, 22));
+        btnUndo.addActionListener(this::btnUndoActionPerformed);
+
+        txtSort.setText("Sort By:");
+
+        cmbSort.setForeground(new java.awt.Color(127, 85, 57));
+        cmbSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest First", "Oldest First" }));
+        cmbSort.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cmbSort.addActionListener(this::cmbSortActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -110,64 +165,115 @@ public class HistoryTabPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtSearch)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtField, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtSort)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(txtLabel)
                         .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(195, 195, 195))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(196, 196, 196)
+                .addComponent(btnUndo, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                .addGap(196, 196, 196))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jLabel1)
+                .addComponent(txtLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSearch)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSort)
+                            .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void txtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        String searchText = txtField.getText().trim();
+        jButton1.doClick();
+
+        if (searchText.isEmpty()) {
+            sorter.setRowFilter(null);
+            return;
+        }
+
+        sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + searchText,3));
+    }//GEN-LAST:event_txtFieldActionPerformed
+
+    private void btnUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoActionPerformed
+
+        try {
+            String result = inventory.undoLastTransaction();
+            javax.swing.JOptionPane.showMessageDialog(this, result);
+            loadTransactions();
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(),"Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnUndoActionPerformed
+
+    private void cmbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSortActionPerformed
+        String selected =
+            cmbSort.getSelectedItem().toString();
+
+            if (selected.equals("Latest First")) {
+
+                sorter.setSortKeys(Arrays.asList(
+                new RowSorter.SortKey(1, SortOrder.DESCENDING)));
+            } else {
+                sorter.setSortKeys(Arrays.asList(
+                new RowSorter.SortKey(1, SortOrder.ASCENDING)));
+            }
+    }//GEN-LAST:event_cmbSortActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String searchText = txtField.getText().trim();
+
+        TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>) tblTable.getRowSorter();
+
+        if (searchText.isEmpty() || searchText.equals("Search Product ID ..." )) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(
+                javax.swing.RowFilter.regexFilter("(?i)" + searchText,3));
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnUndo;
+    private javax.swing.JComboBox<String> cmbSort;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JColorChooser jColorChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblTable;
+    private javax.swing.JTextField txtField;
+    private javax.swing.JLabel txtLabel;
+    private javax.swing.JLabel txtSearch;
+    private javax.swing.JLabel txtSort;
     // End of variables declaration//GEN-END:variables
 }
