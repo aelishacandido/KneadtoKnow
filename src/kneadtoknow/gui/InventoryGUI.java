@@ -14,6 +14,10 @@ public class InventoryGUI extends javax.swing.JFrame {
 
     InventoryPanel.add(new InventoryTabPanel(),java.awt.BorderLayout.CENTER);
     
+    HistoryPanel.setLayout(new java.awt.BorderLayout());
+
+    HistoryPanel.add(new HistoryTabPanel(),java.awt.BorderLayout.CENTER);
+    
  /*  PosPanel.setLayout(new java.awt.BorderLayout());
 
     PosPanel.add(new POSTabPanel(),java.awt.BorderLayout.CENTER);
@@ -21,10 +25,6 @@ public class InventoryGUI extends javax.swing.JFrame {
     ReportsPanel.setLayout(new java.awt.BorderLayout());
 
     ReportsPanel.add(new ReportsTabPanel(),java.awt.BorderLayout.CENTER);
-    
-    HistoryPanel.setLayout(new java.awt.BorderLayout());
-
-    HistoryPanel.add(new HistoryTabPanel(),java.awt.BorderLayout.CENTER);
     
     AnalyticsPanel.setLayout(new java.awt.BorderLayout());
 
